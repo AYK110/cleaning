@@ -420,21 +420,23 @@
           </div>
         </div>
         <div>
-          <div class="filter-row" id="supply-cat-filter">
-            <button class="filter-chip active" onclick="filterSuppliesCat(this,'all')">すべて</button>
-            <button class="filter-chip" onclick="filterSuppliesCat(this,'洗剤')">洗剤</button>
-            <button class="filter-chip" onclick="filterSuppliesCat(this,'道具')">道具</button>
-            <button class="filter-chip" onclick="filterSuppliesCat(this,'消耗品')">消耗品</button>
-          </div>
-          <div class="filter-row" id="supply-area-filter">
-            <button class="filter-chip active" onclick="filterSuppliesArea(this,'all')">場所：すべて</button>
-            <button class="filter-chip" onclick="filterSuppliesArea(this,'キッチン')">🍳 キッチン</button>
-            <button class="filter-chip" onclick="filterSuppliesArea(this,'お風呂')">🛁 お風呂</button>
-            <button class="filter-chip" onclick="filterSuppliesArea(this,'トイレ')">🚽 トイレ</button>
-            <button class="filter-chip" onclick="filterSuppliesArea(this,'洗面台')">🚰 洗面台</button>
-            <button class="filter-chip" onclick="filterSuppliesArea(this,'リビング')">🛋️ リビング</button>
-            <button class="filter-chip" onclick="filterSuppliesArea(this,'玄関')">👟 玄関</button>
-            <button class="filter-chip" onclick="filterSuppliesArea(this,'ウォークインクローゼット')">👗 クローゼット</button>
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+            <div class="filter-row" id="supply-cat-filter" style="margin-bottom:0;flex-shrink:0;">
+              <button class="filter-chip active" onclick="filterSuppliesCat(this,'all')">すべて</button>
+              <button class="filter-chip" onclick="filterSuppliesCat(this,'洗剤')">洗剤</button>
+              <button class="filter-chip" onclick="filterSuppliesCat(this,'道具')">道具</button>
+              <button class="filter-chip" onclick="filterSuppliesCat(this,'消耗品')">消耗品</button>
+            </div>
+            <select id="supply-area-select" onchange="filterSuppliesArea(this.value)" style="height:32px;border:1px solid var(--border);border-radius:20px;padding:0 12px;font-size:13px;background:var(--card);color:var(--text);cursor:pointer;flex-shrink:0;">
+              <option value="all">📍 場所：すべて</option>
+              <option value="キッチン">🍳 キッチン</option>
+              <option value="お風呂">🛁 お風呂</option>
+              <option value="トイレ">🚽 トイレ</option>
+              <option value="洗面台">🚰 洗面台</option>
+              <option value="リビング">🛋️ リビング</option>
+              <option value="玄関">👟 玄関</option>
+              <option value="ウォークインクローゼット">👗 クローゼット</option>
+            </select>
           </div>
           <div id="supplies-list"></div>
         </div>
@@ -1428,10 +1430,8 @@ function filterSuppliesCat(btn, cat) {
   btn.classList.add('active');
   renderSupplies();
 }
-function filterSuppliesArea(btn, area) {
+function filterSuppliesArea(area) {
   suppliesAreaFilter = area;
-  document.querySelectorAll('#supply-area-filter .filter-chip').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
   renderSupplies();
 }
 
