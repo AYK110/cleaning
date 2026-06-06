@@ -632,7 +632,7 @@ const DEFAULT_SUPPLIES = [
   { id:'s2',  name:'バスマジックリン',   category:'洗剤', icon:'🛁', areas:['お風呂'], stock:'あり', note:'浴槽・壁・床に使用可。入浴後すぐが汚れが落ちやすい' },
   { id:'s3',  name:'カビキラー',         category:'洗剤', icon:'☠️', areas:['お風呂','洗面台'], stock:'あり', note:'黒カビに直接→10〜30分放置→流す。換気必須。酸性洗剤と混ぜない' },
   { id:'s4',  name:'キッチンマジックリン', category:'洗剤', icon:'🍳', areas:['キッチン'], stock:'あり', note:'油汚れに。スプレーして数分置いてから拭き取る' },
-  { id:'s5',  name:'マイペット', category:'洗剤', icon:'🫧', areas:['リビング','玄関'], stock:'なし', note:'薄めて床拭きに' },
+  { id:'s5',  name:'かんたんマイペット', category:'洗剤', icon:'🫧', areas:['リビング','玄関'], stock:'なし', note:'そのままスプレーして拭くだけ。床・フローリング・家具の日常拭き掃除に' },
   { id:'s6',  name:'重曹スプレー',       category:'洗剤', icon:'💧', areas:['キッチン','お風呂','洗面台'], stock:'あり', note:'水200mlに重曹小さじ1。油汚れ・臭いに万能。食品に触れる場所でも安心' },
   { id:'s7',  name:'クエン酸スプレー',   category:'洗剤', icon:'🍋', areas:['洗面台','トイレ','キッチン'], stock:'あり', note:'水垢・石鹸カス・尿石に。塩素系洗剤と混ぜない' },
   { id:'s8',  name:'消臭スプレー',       category:'洗剤', icon:'🌸', areas:['リビング','ウォークインクローゼット'], stock:'あり', note:'ソファ・カーテン・カーペットに。30cm離してスプレー' },
@@ -964,10 +964,11 @@ let state = loadState();
     if (s && s.stock !== stock) s.stock = stock;
   });
   // 名前・ytUrl を最新に同期
-  const nameFixes = { s5:'マイペット' };
+  const nameFixes = { s5:'かんたんマイペット' };
   Object.entries(nameFixes).forEach(([id, name]) => {
     const s = state.supplies.find(x => x.id === id);
-    if (s) s.name = name;
+    const ds = DEFAULT_SUPPLIES.find(x => x.id === id);
+    if (s && ds) { s.name = ds.name; s.note = ds.note; }
   });
   DEFAULT_SUPPLIES.forEach(ds => {
     const s = state.supplies.find(x => x.id === ds.id);
