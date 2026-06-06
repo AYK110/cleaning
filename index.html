@@ -634,6 +634,7 @@ const DEFAULT_SUPPLIES = [
   { id:'s16', name:'フローリングシート（ウェット）', category:'消耗品', icon:'💦', areas:['リビング','玄関'], stock:'あり', note:'ドライの後に使うと効果的' },
   { id:'s17', name:'トイレシート（使い捨て）', category:'消耗品', icon:'🧻', areas:['トイレ'], stock:'あり', note:'便座・外側・床の日常清掃に。1枚で完結' },
   { id:'s18', name:'ウタマロクリーナー', category:'洗剤', icon:'🟢', areas:['キッチン','お風呂','洗面台','玄関'], stock:'あり', note:'中性で素材を選ばず使える万能洗剤。泡立てて擦るだけ。シンク磨きにも最適' },
+  { id:'s19', name:'ジフ（クレンザー）', category:'洗剤', icon:'🫙', areas:['キッチン','洗面台'], stock:'なし', note:'研磨剤入りクレンザー。シンクや浴槽の頑固な水垢・汚れに。素材を確認してから使用' },
 ];
 
 const DEFAULT_RECIPES = [
@@ -683,20 +684,21 @@ const DEFAULT_RECIPES = [
   },
   {
     id:'r6b', name:'キッチン掃除（週）', ytUrl:'https://www.youtube.com/watch?v=bB9T2AmlkXo', area:'キッチン', time:15,
-    supplies:['ウタマロクリーナー','スポンジ（キッチン）','使い捨て手袋'],
-    extraSupplies:['キッチン泡ハイター','ブラシ'],
+    supplies:['スポンジ（キッチン）','使い捨て手袋'],
+    extraSupplies:['キッチン泡ハイター','ジフ（クレンザー）','ブラシ'],
     steps:[
       '【シンク・蛇口を磨く】',
-      'スポンジにウタマロクリーナーを2〜3プッシュして泡立てる',
-      '蛇口・シンク全体を擦る',
-      '水でよくすすぐ',
+      'スポンジで蛇口・シンク全体を擦る',
+      '水で洗剤を流す',
+      'シンク全体を水で濡らしてからジフを垂らす（油汚れが酷い場合は先にキッチンマジックリンで表面の汚れを取ってから）',
+      'スポンジで全体を擦り、水で流す',
       '【排水溝の除菌】',
       '排水溝の蓋を水とブラシで表面の汚れを落とす',
       'キッチン泡ハイターを2プッシュしてブラシで広げ、数分つけ置きする',
       '水で流す',
     ],
-    warning:'泡ハイター（塩素系）とウタマロクリーナー（中性）は直接混ぜない。使用後は水で流してから次の洗剤を使うこと。',
-    memo:'ウタマロクリーナーは素材を選ばず使えるので、蛇口もシンクも一本で対応できる。週1の中で一番「やった感」がある。',
+    warning:'泡ハイター（塩素系）とキッチンマジックリン（酸性成分含む製品）は直接混ぜない。使用後は水拭きしてから次の洗剤を使うこと。',
+    memo:'シンク磨きはジフで擦ると白くくすんでいたシンクがピカピカになって達成感大きめ。週1の中で一番「やった感」がある。',
   },
   {
     id:'r6c', name:'キッチン掃除（月）', ytUrl:'https://www.youtube.com/watch?v=bB9T2AmlkXo', area:'キッチン', time:40,
@@ -1412,9 +1414,13 @@ function renderSupplies() {
   const items = suppliesFilter === 'all' ? state.supplies : state.supplies.filter(s => s.category === suppliesFilter);
   if (items.length === 0) { document.getElementById('supplies-list').innerHTML = `<div class="empty-state"><div class="icon">🧴</div>登録なし</div>`; return; }
   document.getElementById('supplies-list').innerHTML = items.map(s => {
-    const stockTag = s.stock==='あり' ? `<span class="tag" style="font-size:11px;">在庫あり</span>`
-      : s.stock==='少ない' ? `<span class="tag tag-orange" style="font-size:11px;">残り少ない</span>`
-      : `<span class="tag tag-red" style="font-size:11px;">在庫なし</span>`;
+    const isDefault = DEFAULT_SUPPLY_IDS.has(s.id);
+    const stockCycle = isDefault ? `onclick="cycleStock('${s.id}')" title="タップで切り替え" style="cursor:pointer;"` : '';
+    const stockTag = s.stock==='あり'
+      ? `<span class="tag" style="font-size:11px;" ${stockCycle}>在庫あり</span>`
+      : s.stock==='少ない'
+      ? `<span class="tag tag-orange" style="font-size:11px;" ${stockCycle}>残り少ない</span>`
+      : `<span class="tag tag-red" style="font-size:11px;" ${stockCycle}>在庫なし</span>`;
     return `<div class="supply-card">
       <div class="supply-header">
         <div class="supply-icon">${s.icon||'🧴'}</div>
@@ -1423,17 +1429,10 @@ function renderSupplies() {
         </div>
       </div>
       ${s.note?`<div class="supply-note">${s.note}</div>`:''}
-      <div class="supply-actions">
-        ${DEFAULT_SUPPLY_IDS.has(s.id)
-          ? `<select class="btn btn-outline btn-sm" style="padding:4px 8px;font-size:12px;" onchange="changeStock('${s.id}',this.value)">
-               <option value="あり"  ${s.stock==='あり' ?'selected':''}>在庫あり</option>
-               <option value="少ない" ${s.stock==='少ない'?'selected':''}>残り少ない</option>
-               <option value="なし"  ${s.stock==='なし' ?'selected':''}>在庫なし</option>
-             </select>`
-          : `<button class="btn btn-outline btn-sm" onclick="editSupply('${s.id}')">編集</button>
-             <button class="btn btn-danger btn-sm" onclick="deleteSupply('${s.id}')">削除</button>`
-        }
-      </div>
+      ${isDefault ? '' : `<div class="supply-actions">
+        <button class="btn btn-outline btn-sm" onclick="editSupply('${s.id}')">編集</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteSupply('${s.id}')">削除</button>
+      </div>`}
     </div>`;
   }).join('');
 }
@@ -1484,9 +1483,12 @@ function saveSupply() {
   saveState(); cancelSupplyEdit(); renderSupplies();
 }
 
-function changeStock(id, value) {
+function cycleStock(id) {
   const s = state.supplies.find(x => x.id === id);
-  if (s) { s.stock = value; saveState(); renderSupplies(); }
+  if (!s) return;
+  const order = ['あり', '少ない', 'なし'];
+  s.stock = order[(order.indexOf(s.stock) + 1) % order.length];
+  saveState(); renderSupplies();
 }
 
 function deleteSupply(id) {
