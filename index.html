@@ -632,7 +632,7 @@ const DEFAULT_SUPPLIES = [
   { id:'s2',  name:'バスマジックリン',   category:'洗剤', icon:'🛁', areas:['お風呂'], stock:'あり', note:'浴槽・壁・床に使用可。入浴後すぐが汚れが落ちやすい' },
   { id:'s3',  name:'カビキラー',         category:'洗剤', icon:'☠️', areas:['お風呂','洗面台'], stock:'あり', note:'黒カビに直接→10〜30分放置→流す。換気必須。酸性洗剤と混ぜない' },
   { id:'s4',  name:'キッチンマジックリン', category:'洗剤', icon:'🍳', areas:['キッチン'], stock:'あり', note:'油汚れに。スプレーして数分置いてから拭き取る' },
-  { id:'s5',  name:'マイペット（床用）', category:'洗剤', icon:'🫧', areas:['リビング','玄関'], stock:'なし', note:'薄めて床拭きに' },
+  { id:'s5',  name:'マイペット', category:'洗剤', icon:'🫧', areas:['リビング','玄関'], stock:'なし', note:'薄めて床拭きに' },
   { id:'s6',  name:'重曹スプレー',       category:'洗剤', icon:'💧', areas:['キッチン','お風呂','洗面台'], stock:'あり', note:'水200mlに重曹小さじ1。油汚れ・臭いに万能。食品に触れる場所でも安心' },
   { id:'s7',  name:'クエン酸スプレー',   category:'洗剤', icon:'🍋', areas:['洗面台','トイレ','キッチン'], stock:'あり', note:'水垢・石鹸カス・尿石に。塩素系洗剤と混ぜない' },
   { id:'s8',  name:'消臭スプレー',       category:'洗剤', icon:'🌸', areas:['リビング','ウォークインクローゼット'], stock:'あり', note:'ソファ・カーテン・カーペットに。30cm離してスプレー' },
@@ -645,7 +645,7 @@ const DEFAULT_SUPPLIES = [
   { id:'s15', name:'フローリングシート（ドライ）', category:'消耗品', icon:'🌬️', areas:['リビング','玄関','ウォークインクローゼット'], stock:'あり', note:'ホコリ取り。掃除機より静かで手軽' },
   { id:'s16', name:'フローリングシート（ウェット）', category:'消耗品', icon:'💦', areas:['リビング','玄関'], stock:'あり', note:'ドライの後に使うと効果的' },
   { id:'s17', name:'トイレシート（使い捨て）', category:'消耗品', icon:'🧻', areas:['トイレ'], stock:'あり', note:'便座・外側・床の日常清掃に。1枚で完結' },
-  { id:'s18', name:'ウタマロクリーナー', category:'洗剤', icon:'🟢', areas:['キッチン','お風呂','洗面台','リビング','玄関'], stock:'あり', note:'中性で素材を選ばず使える万能洗剤。泡立てて擦るだけ。シンク磨きにも最適' },
+  { id:'s18', name:'ウタマロクリーナー', category:'洗剤', icon:'🟢', areas:['キッチン','お風呂','洗面台','リビング','玄関'], stock:'あり', note:'中性で素材を選ばず使える万能洗剤。泡立てて擦るだけ。シンク磨きにも最適', ytUrl:'https://www.youtube.com/watch?v=SS8whIBLNvo' },
   { id:'s19', name:'ジフ（クレンザー）', category:'洗剤', icon:'🫙', areas:['キッチン','洗面台'], stock:'なし', note:'研磨剤入りクレンザー。シンクや浴槽の頑固な水垢・汚れに。素材を確認してから使用' },
   { id:'s20', name:'セスキ炭酸ソーダ', category:'洗剤', icon:'🧂', areas:['キッチン','リビング','お風呂','洗面台'], stock:'あり', note:'重曹より強いアルカリ性。油汚れ・皮脂・血液に効果的。水に溶けやすく使いやすい' },
   { id:'s21', name:'バスタブクレンジング', category:'洗剤', icon:'🛁', areas:['お風呂'], stock:'あり', note:'浴槽に吹きかけてシャワーで流すだけ。こすり洗い不要で浴槽の皮脂・石鹸カスが落ちる' },
@@ -654,6 +654,10 @@ const DEFAULT_SUPPLIES = [
   { id:'s24', name:'キュキュット クリア除菌', category:'洗剤', icon:'🍽️', areas:['キッチン'], stock:'あり', note:'食器用洗剤。除菌・ウイルス除去効果あり。少量でよく泡立ち、すすぎ残りが少ない' },
   { id:'s25', name:'キュキュット 泡スプレー', category:'洗剤', icon:'🫧', areas:['キッチン'], stock:'あり', note:'食器・コンロ周りへの泡スプレー。汚れが気になる場所にシュッとかけてしばらく置いてから拭き取る' },
   { id:'s26', name:'パイプクリーナー', category:'洗剤', icon:'🪠', areas:['キッチン','お風呂','洗面台'], stock:'あり', note:'排水口のぬめり・詰まり・臭いに。液を流し込んで15〜30分放置後に水で流す。月1回が目安' },
+  { id:'s27', name:'ハンディワイパー 超ロング', category:'道具', icon:'🪣', areas:['リビング'], stock:'あり', note:'天井・照明・テレビ上など高い場所や届きにくい場所のホコリ取りに。掃除前に最初に使う' },
+  { id:'s28', name:'すき間用ホコリ取り', category:'道具', icon:'🪥', areas:['リビング','キッチン'], stock:'なし', note:'棚の隙間・家電周り・細かい部分のホコリをかき出す。ハンディワイパーと組み合わせて使う' },
+  { id:'s29', name:'ホームリセット泡クリーナー', category:'洗剤', icon:'🫧', areas:['リビング'], stock:'なし', note:'テレビ画面・テレビ台・家具の拭き掃除に。マイクロファイバークロスに吹きかけて使う' },
+  { id:'s30', name:'オキシクリーン', category:'洗剤', icon:'🫙', areas:['キッチン','お風呂','洗面台'], stock:'あり', note:'酸素系漂白剤。つけ置き洗いで黄ばみ・臭い・菌を除去。塩素系と混ぜない。40〜60℃のお湯で溶かして使う' },
 ];
 
 const DEFAULT_RECIPES = [
@@ -958,6 +962,16 @@ let state = loadState();
   Object.entries(stockFixes).forEach(([id, stock]) => {
     const s = state.supplies.find(x => x.id === id);
     if (s && s.stock !== stock) s.stock = stock;
+  });
+  // 名前・ytUrl を最新に同期
+  const nameFixes = { s5:'マイペット' };
+  Object.entries(nameFixes).forEach(([id, name]) => {
+    const s = state.supplies.find(x => x.id === id);
+    if (s) s.name = name;
+  });
+  DEFAULT_SUPPLIES.forEach(ds => {
+    const s = state.supplies.find(x => x.id === ds.id);
+    if (s && ds.ytUrl !== undefined) s.ytUrl = ds.ytUrl;
   });
 
   saveState();
@@ -1474,6 +1488,7 @@ function renderSupplies() {
         </div>
       </div>
       ${s.note?`<div class="supply-note">${s.note}</div>`:''}
+      ${s.ytUrl?`<a href="${s.ytUrl}" target="_blank" class="yt-btn" style="display:inline-flex;margin-top:8px;font-size:12px;" onclick="event.stopPropagation()">▶ YouTube で使い方を見る</a>`:''}
       ${isDefault ? '' : `<div class="supply-actions">
         <button class="btn btn-outline btn-sm" onclick="editSupply('${s.id}')">編集</button>
         <button class="btn btn-danger btn-sm" onclick="deleteSupply('${s.id}')">削除</button>
