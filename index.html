@@ -226,7 +226,7 @@
 <div class="app-header">
   🧹 掃除管理
   <span class="date" id="header-date"></span>
-  <button class="header-sync-btn" onclick="openSyncModal()">☁️ 同期</button>
+  <button class="header-sync-btn" onclick="headerSyncTap()">☁️ 同期</button>
 </div>
 
 <div class="desktop-layout">
@@ -1618,6 +1618,15 @@ function showToast(msg) {
 // ══════════════════════════════════════════════
 // GAS SYNC
 // ══════════════════════════════════════════════
+function headerSyncTap() {
+  const url = localStorage.getItem('gasUrl') || '';
+  if (url.startsWith('https://script.google.com')) {
+    syncPull(); // URL設定済み → 即Pull
+  } else {
+    openSyncModal(); // 未設定 → 設定画面へ
+  }
+}
+
 function openSyncModal() {
   const url = localStorage.getItem('gasUrl') || '';
   document.getElementById('gas-url-input').value = url;
@@ -1729,6 +1738,34 @@ function copyGasCode() {
 // ══════════════════════════════════════════════
 renderHome();
 updateSyncIndicator();
+
+// 起動時に自動Pull（GAS URL設定済みの場合のみ・サイレント実行）
+(function autoPullOnStart() {
+  const url = localStorage.getItem('gasUrl') || '';
+  if (!url.startsWith('https://script.google.com')) return;
+  fetch(url)
+    .then(r => r.json())
+    .then(data => {
+      if (!data || typeof data !== 'object') return;
+      if (data.supplies)        state.supplies        = data.supplies;
+      if (data.recipes)         state.recipes         = data.recipes;
+      if (data.scheduleChecks)  state.scheduleChecks  = data.scheduleChecks;
+      if (data.deepCleanChecks) state.deepCleanChecks = data.deepCleanChecks;
+      if (data.houseworkChecks) state.houseworkChecks = data.houseworkChecks;
+      const remoteDate = data.todayDate;
+      const localDate  = new Date().toISOString().slice(0,10);
+      if (remoteDate === localDate && data.todayChecks) {
+        state.todayChecks = data.todayChecks;
+        state.todayDate   = remoteDate;
+      }
+      saveState();
+      renderHome();
+      const t = new Date().toLocaleString('ja-JP', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+      localStorage.setItem('lastSyncTime', t);
+      updateSyncIndicator();
+    })
+    .catch(() => {}); // オフライン時は黙って無視
+})();
 </script>
 </body>
 </html>
