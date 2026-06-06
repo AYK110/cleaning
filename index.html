@@ -654,8 +654,8 @@ const DEFAULT_SUPPLIES = [
   { id:'s24', name:'キュキュット クリア除菌', category:'洗剤', icon:'🍽️', areas:['キッチン'], stock:'あり', note:'食器用洗剤。除菌・ウイルス除去効果あり。少量でよく泡立ち、すすぎ残りが少ない' },
   { id:'s25', name:'キュキュット 泡スプレー', category:'洗剤', icon:'🫧', areas:['キッチン'], stock:'あり', note:'食器・コンロ周りへの泡スプレー。汚れが気になる場所にシュッとかけてしばらく置いてから拭き取る' },
   { id:'s26', name:'パイプクリーナー', category:'洗剤', icon:'🪠', areas:['キッチン','お風呂','洗面台'], stock:'あり', note:'排水口のぬめり・詰まり・臭いに。液を流し込んで15〜30分放置後に水で流す。月1回が目安' },
-  { id:'s27', name:'ハンディワイパー 超ロング', category:'道具', icon:'🪣', areas:['リビング'], stock:'あり', note:'天井・照明・テレビ上など高い場所や届きにくい場所のホコリ取りに。掃除前に最初に使う' },
-  { id:'s28', name:'すき間用ホコリ取り', category:'道具', icon:'🪥', areas:['リビング','キッチン'], stock:'なし', note:'棚の隙間・家電周り・細かい部分のホコリをかき出す。ハンディワイパーと組み合わせて使う' },
+  { id:'s27', name:'ハンディワイパー 超ロング', category:'道具', icon:'🪣', areas:['リビング'], stock:'あり', note:'天井・照明・テレビ上など高い場所や届きにくい場所のホコリ取りに。' },
+  { id:'s28', name:'すき間用ホコリ取り', category:'道具', icon:'🪥', areas:['リビング','キッチン'], stock:'なし', note:'棚の隙間・家電周り・細かい部分のホコリをかき出す。' },
   { id:'s29', name:'ホームリセット泡クリーナー', category:'洗剤', icon:'🫧', areas:['リビング'], stock:'なし', note:'テレビ画面・テレビ台・家具の拭き掃除に。マイクロファイバークロスに吹きかけて使う' },
   { id:'s30', name:'オキシクリーン', category:'洗剤', icon:'🫙', areas:['キッチン','お風呂','洗面台'], stock:'あり', note:'酸素系漂白剤。つけ置き洗いで黄ばみ・臭い・菌を除去。塩素系と混ぜない。40〜60℃のお湯で溶かして使う' },
 ];
@@ -955,7 +955,7 @@ let state = loadState();
   DEFAULT_SUPPLIES.forEach(s => {
     const existing = state.supplies.find(x => x.id === s.id);
     if (!existing) state.supplies.push({...s});
-    else existing.areas = s.areas; // 場所タグを常に最新に
+    else { existing.areas = s.areas; existing.note = s.note; } // 場所・説明を常に最新に
   });
   // 在庫の修正（既存データが古い値のままの場合のみ補正）
   const stockFixes = { s5:'なし', s7:'あり' }; // マイペット→なし、クエン酸→あり
