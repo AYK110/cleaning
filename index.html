@@ -153,8 +153,8 @@
   .step-tasks li::before { content: '▸ '; color: var(--primary); }
 
   /* Supplies */
-  .supply-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 10px; transition: box-shadow .15s; }
-  @media (min-width: 768px) { .supply-card { margin-bottom: 0; } }
+  .supply-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 18px; transition: box-shadow .15s; }
+  @media (min-width: 768px) { .supply-card { margin-bottom: 18px; } }
   .supply-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,.07); }
   .supply-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
   .supply-icon { font-size: 26px; flex-shrink: 0; }
@@ -620,9 +620,9 @@ const DEFAULT_SUPPLIES = [
   { id:'s2',  name:'バスマジックリン',   category:'洗剤', icon:'🛁', areas:['お風呂'], stock:'あり', note:'浴槽・壁・床に使用可。入浴後すぐが汚れが落ちやすい' },
   { id:'s3',  name:'カビキラー',         category:'洗剤', icon:'☠️', areas:['お風呂','洗面台'], stock:'あり', note:'黒カビに直接→10〜30分放置→流す。換気必須。酸性洗剤と混ぜない' },
   { id:'s4',  name:'キッチンマジックリン', category:'洗剤', icon:'🍳', areas:['キッチン'], stock:'あり', note:'油汚れに。スプレーして数分置いてから拭き取る' },
-  { id:'s5',  name:'マイペット（床用）', category:'洗剤', icon:'🫧', areas:['リビング','玄関'], stock:'あり', note:'薄めて床拭きに' },
+  { id:'s5',  name:'マイペット（床用）', category:'洗剤', icon:'🫧', areas:['リビング','玄関'], stock:'なし', note:'薄めて床拭きに' },
   { id:'s6',  name:'重曹スプレー',       category:'洗剤', icon:'💧', areas:['キッチン','お風呂','洗面台'], stock:'あり', note:'水200mlに重曹小さじ1。油汚れ・臭いに万能。食品に触れる場所でも安心' },
-  { id:'s7',  name:'クエン酸スプレー',   category:'洗剤', icon:'🍋', areas:['洗面台','トイレ','キッチン'], stock:'なし', note:'水垢・石鹸カス・尿石に。塩素系洗剤と混ぜない' },
+  { id:'s7',  name:'クエン酸スプレー',   category:'洗剤', icon:'🍋', areas:['洗面台','トイレ','キッチン'], stock:'あり', note:'水垢・石鹸カス・尿石に。塩素系洗剤と混ぜない' },
   { id:'s8',  name:'消臭スプレー',       category:'洗剤', icon:'🌸', areas:['リビング','ウォークインクローゼット'], stock:'あり', note:'ソファ・カーテン・カーペットに。30cm離してスプレー' },
   { id:'s9',  name:'クイックルワイパー', category:'道具', icon:'🧹', areas:['リビング','玄関','ウォークインクローゼット'], stock:'あり', note:'ドライ→ウェットの順が効果的' },
   { id:'s10', name:'トイレブラシ',       category:'道具', icon:'🪣', areas:['トイレ'], stock:'あり', note:'使用後は洗剤で洗って乾かす' },
@@ -633,6 +633,7 @@ const DEFAULT_SUPPLIES = [
   { id:'s15', name:'フローリングシート（ドライ）', category:'消耗品', icon:'🌬️', areas:['リビング','玄関','ウォークインクローゼット'], stock:'あり', note:'ホコリ取り。掃除機より静かで手軽' },
   { id:'s16', name:'フローリングシート（ウェット）', category:'消耗品', icon:'💦', areas:['リビング','玄関'], stock:'あり', note:'ドライの後に使うと効果的' },
   { id:'s17', name:'トイレシート（使い捨て）', category:'消耗品', icon:'🧻', areas:['トイレ'], stock:'あり', note:'便座・外側・床の日常清掃に。1枚で完結' },
+  { id:'s18', name:'ウタマロクリーナー', category:'洗剤', icon:'🟢', areas:['キッチン','お風呂','洗面台','玄関'], stock:'あり', note:'中性で素材を選ばず使える万能洗剤。泡立てて擦るだけ。シンク磨きにも最適' },
 ];
 
 const DEFAULT_RECIPES = [
@@ -653,14 +654,6 @@ const DEFAULT_RECIPES = [
     memo:'クエン酸湿布の時間が長いほど効果的。しつこい水垢は30分放置でもOK。',
   },
   {
-    id:'r3', name:'コンロの頑固な油汚れ落とし', ytUrl:'', area:'キッチン', time:30,
-    supplies:['キッチンマジックリン','重曹スプレー','スポンジ（キッチン）','使い捨て手袋'],
-    extraSupplies:['キッチンペーパー','ラップ'],
-    steps:['五徳・バーナーキャップを取り外す','重曹スプレーをコンロ全体に吹きかける','キッチンペーパーで湿布してラップを貼る（15〜20分）','五徳はシンクに重曹を溶かしたお湯に浸け置き（20分）','湿布を剥がし、キッチンマジックリンをスプレーしてスポンジでこする','五徳の細かい部分は古い歯ブラシで','水で流すか固く絞った布で拭き取る','乾拭きで仕上げる'],
-    warning:'コンロは火を消して完全に冷めてから掃除する。五徳が熱いまま水をかけない。',
-    memo:'調理後すぐの温かいうちに重曹スプレーをかけておくと、次の掃除がずっと楽になる。',
-  },
-  {
     id:'r4', name:'トイレの尿石・黄ばみ除去', ytUrl:'', area:'トイレ', time:25,
     supplies:['クエン酸スプレー','トイレマジックリン','トイレブラシ','使い捨て手袋'],
     extraSupplies:['トイレットペーパー','ラップ'],
@@ -677,7 +670,7 @@ const DEFAULT_RECIPES = [
     memo:'月1〜2回続けるとぬめりが溜まりにくくなる。洗濯機の排水口にも同じ手順が使える。',
   },
   {
-    id:'r6a', name:'キッチン掃除（毎日）― コンロ拭き', ytUrl:'https://www.youtube.com/watch?v=bB9T2AmlkXo', area:'キッチン', time:5,
+    id:'r6a', name:'キッチン掃除（日）', ytUrl:'https://www.youtube.com/watch?v=bB9T2AmlkXo', area:'キッチン', time:5,
     supplies:['キッチンマジックリン','スポンジ（キッチン）'],
     extraSupplies:['キッチンペーパー'],
     steps:[
@@ -689,25 +682,24 @@ const DEFAULT_RECIPES = [
     memo:'調理後の温かいうちが油汚れが一番落ちやすい。習慣化するなら「ご飯を食べている間にセット→食後すぐ拭く」の流れがおすすめ。',
   },
   {
-    id:'r6b', name:'キッチン掃除（週1）― シンク・排水溝', ytUrl:'https://www.youtube.com/watch?v=bB9T2AmlkXo', area:'キッチン', time:15,
-    supplies:['スポンジ（キッチン）','使い捨て手袋'],
-    extraSupplies:['キッチン泡ハイター','ジフ（クレンザー）','ブラシ'],
+    id:'r6b', name:'キッチン掃除（週）', ytUrl:'https://www.youtube.com/watch?v=bB9T2AmlkXo', area:'キッチン', time:15,
+    supplies:['ウタマロクリーナー','スポンジ（キッチン）','使い捨て手袋'],
+    extraSupplies:['キッチン泡ハイター','ブラシ'],
     steps:[
       '【シンク・蛇口を磨く】',
-      'スポンジで蛇口・シンク全体を擦る',
-      '水で洗剤を流す',
-      'シンク全体を水で濡らしてからジフを垂らす（油汚れが酷い場合は先にキッチンマジックリンで表面の汚れを取ってから）',
-      'スポンジで全体を擦り、水で流す',
+      'スポンジにウタマロクリーナーを2〜3プッシュして泡立てる',
+      '蛇口・シンク全体を擦る',
+      '水でよくすすぐ',
       '【排水溝の除菌】',
       '排水溝の蓋を水とブラシで表面の汚れを落とす',
       'キッチン泡ハイターを2プッシュしてブラシで広げ、数分つけ置きする',
       '水で流す',
     ],
-    warning:'泡ハイター（塩素系）とキッチンマジックリン（酸性成分含む製品）は直接混ぜない。使用後は水拭きしてから次の洗剤を使うこと。',
-    memo:'シンク磨きはジフで擦ると白くくすんでいたシンクがピカピカになって達成感大きめ。週1の中で一番「やった感」がある。',
+    warning:'泡ハイター（塩素系）とウタマロクリーナー（中性）は直接混ぜない。使用後は水で流してから次の洗剤を使うこと。',
+    memo:'ウタマロクリーナーは素材を選ばず使えるので、蛇口もシンクも一本で対応できる。週1の中で一番「やった感」がある。',
   },
   {
-    id:'r6c', name:'キッチン掃除（月1）― 換気扇周り・壁・キッチン台', ytUrl:'https://www.youtube.com/watch?v=bB9T2AmlkXo', area:'キッチン', time:40,
+    id:'r6c', name:'キッチン掃除（月）', ytUrl:'https://www.youtube.com/watch?v=bB9T2AmlkXo', area:'キッチン', time:40,
     supplies:['キッチンマジックリン','スポンジ（キッチン）','使い捨て手袋'],
     extraSupplies:['キッチン泡ハイター','メラミンスポンジ','タオル（拭き掃除用）複数枚','ボウル'],
     steps:[
@@ -731,7 +723,7 @@ const DEFAULT_RECIPES = [
     memo:'月1でやっておくと年1の換気扇ファン分解掃除のときの汚れが格段に少なくて済む。洗濯のついでに始めると動きやすい。',
   },
   {
-    id:'r6d', name:'キッチン掃除（年1）― 換気扇ファン分解掃除', ytUrl:'https://www.youtube.com/watch?v=bB9T2AmlkXo', area:'キッチン', time:60,
+    id:'r6d', name:'キッチン掃除（年）', ytUrl:'https://www.youtube.com/watch?v=bB9T2AmlkXo', area:'キッチン', time:60,
     supplies:['キッチンマジックリン','使い捨て手袋'],
     extraSupplies:['バケツ','ブラシ','タオル'],
     steps:[
@@ -750,6 +742,7 @@ const DEFAULT_RECIPES = [
 ];
 
 const DEFAULT_RECIPE_IDS = new Set(DEFAULT_RECIPES.map(r => r.id));
+const DEFAULT_SUPPLY_IDS = new Set(DEFAULT_SUPPLIES.map(s => s.id));
 
 const AREA_GUIDES = [
   { id:'toilet', name:'トイレ 🚽', freq:'便器内：週1 / 外側：毎日〜週2',
@@ -892,19 +885,42 @@ function saveState() { localStorage.setItem('soujikanri_v3', JSON.stringify(stat
 
 let state = loadState();
 
-// マイグレーション：デフォルトレシピに新しいものが追加／IDが変わった場合に既存ユーザーへ反映
-(function migrateDefaultRecipes() {
-  const existingIds = new Set(state.recipes.map(r => r.id));
-  // r6（旧・キッチン全体クリーニング）をr6a〜r6dに置き換え
-  if (existingIds.has('r6') && !existingIds.has('r6a')) {
+// マイグレーション
+(function migrate() {
+  // ── レシピ ──
+  const recipeIds = new Set(state.recipes.map(r => r.id));
+  // r6（旧・キッチン全体クリーニング）→ r6a〜r6d に置き換え
+  if (recipeIds.has('r6') && !recipeIds.has('r6a')) {
     state.recipes = state.recipes.filter(r => r.id !== 'r6');
-    existingIds.delete('r6');
+    recipeIds.delete('r6');
   }
+  // r3（コンロの頑固な油汚れ落とし）を削除
+  if (recipeIds.has('r3')) {
+    state.recipes = state.recipes.filter(r => r.id !== 'r3');
+  }
+  // 新レシピを追加・名前を最新に同期
   DEFAULT_RECIPES.forEach(r => {
-    if (!existingIds.has(r.id)) {
+    const existing = state.recipes.find(x => x.id === r.id);
+    if (!existing) {
       state.recipes.push({...r});
+    } else {
+      existing.name = r.name; // レシピ名を常に最新に
     }
   });
+
+  // ── 道具・洗剤 ──
+  const supplyIds = new Set(state.supplies.map(s => s.id));
+  // 新デフォルト洗剤を追加
+  DEFAULT_SUPPLIES.forEach(s => {
+    if (!supplyIds.has(s.id)) state.supplies.push({...s});
+  });
+  // 在庫の修正（既存データが古い値のままの場合のみ補正）
+  const stockFixes = { s5:'なし', s7:'あり' }; // マイペット→なし、クエン酸→あり
+  Object.entries(stockFixes).forEach(([id, stock]) => {
+    const s = state.supplies.find(x => x.id === id);
+    if (s && s.stock !== stock) s.stock = stock;
+  });
+
   saveState();
 })();
 
@@ -1242,10 +1258,10 @@ function renderRecipeList() {
         <span>📋 ${r.steps.length}ステップ</span>
       </div>
       <div class="recipe-supply-chips">${chips}</div>
-      <div class="recipe-card-actions" onclick="event.stopPropagation()">
+      ${DEFAULT_RECIPE_IDS.has(r.id) ? '' : `<div class="recipe-card-actions" onclick="event.stopPropagation()">
         <button class="btn btn-outline btn-sm" onclick="editRecipe('${r.id}')">編集</button>
-        ${DEFAULT_RECIPE_IDS.has(r.id) ? '' : `<button class="btn btn-danger btn-sm" onclick="deleteRecipe('${r.id}')">削除</button>`}
-      </div>
+        <button class="btn btn-danger btn-sm" onclick="deleteRecipe('${r.id}')">削除</button>
+      </div>`}
     </div>`;
   }).join('');
 }
@@ -1408,8 +1424,15 @@ function renderSupplies() {
       </div>
       ${s.note?`<div class="supply-note">${s.note}</div>`:''}
       <div class="supply-actions">
-        <button class="btn btn-outline btn-sm" onclick="editSupply('${s.id}')">編集</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteSupply('${s.id}')">削除</button>
+        ${DEFAULT_SUPPLY_IDS.has(s.id)
+          ? `<select class="btn btn-outline btn-sm" style="padding:4px 8px;font-size:12px;" onchange="changeStock('${s.id}',this.value)">
+               <option value="あり"  ${s.stock==='あり' ?'selected':''}>在庫あり</option>
+               <option value="少ない" ${s.stock==='少ない'?'selected':''}>残り少ない</option>
+               <option value="なし"  ${s.stock==='なし' ?'selected':''}>在庫なし</option>
+             </select>`
+          : `<button class="btn btn-outline btn-sm" onclick="editSupply('${s.id}')">編集</button>
+             <button class="btn btn-danger btn-sm" onclick="deleteSupply('${s.id}')">削除</button>`
+        }
       </div>
     </div>`;
   }).join('');
@@ -1459,6 +1482,11 @@ function saveSupply() {
     showToast('追加しました');
   }
   saveState(); cancelSupplyEdit(); renderSupplies();
+}
+
+function changeStock(id, value) {
+  const s = state.supplies.find(x => x.id === id);
+  if (s) { s.stock = value; saveState(); renderSupplies(); }
 }
 
 function deleteSupply(id) {
