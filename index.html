@@ -717,7 +717,7 @@ const DEFAULT_RECIPES = [
       '水を拭き取り、十分に乾かしてから取り付ける',
     ],
     warning:'泡ハイター（塩素系）とキッチンマジックリン（酸性成分含む製品）は直接混ぜない。それぞれ使用後に水拭きしてから次の洗剤を使うこと。',
-    memo:'換気扇ファンのつけ置きを最初に始めておくのがポイント。掃除している間に汚れが浮き上がり、最後に楽に落とせる。月1回の目安。',
+    memo:'換気扇ファンのつけ置きを最初に始めておくのがポイント。掃除している間に汚れが浮き上がり、最後に楽に落とせる。換気扇ファンの分解掃除は年1回（大掃除のタイミングなど）で十分。換気扇周りの拭き掃除は月1回程度を目安に。',
   },
 ];
 
@@ -1227,11 +1227,17 @@ function openRecipeModal(id) {
   const ytBtn = r.ytUrl ? `<a class="yt-btn" href="${r.ytUrl}" target="_blank" style="display:inline-flex;margin-bottom:12px;">▶ YouTubeで見る</a>` : '';
   const chips = [...r.supplies, ...(r.extraSupplies||[])].map(s =>
     `<span class="recipe-supply-chip" style="font-size:12px;padding:3px 10px;">${s}</span>`).join('');
-  const steps = r.steps.map((s,i) => `
-    <div class="step-detail-item">
-      <div class="step-detail-num">${i+1}</div>
+  let stepNum = 0;
+  const steps = r.steps.map(s => {
+    if (/^【.+】$/.test(s.trim())) {
+      return `<div style="margin:16px 0 6px;font-size:12px;font-weight:700;color:var(--primary);letter-spacing:.05em;border-left:3px solid var(--primary);padding-left:8px;">${s.trim()}</div>`;
+    }
+    stepNum++;
+    return `<div class="step-detail-item">
+      <div class="step-detail-num">${stepNum}</div>
       <div class="step-detail-text">${s}</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
   const warnBox = r.warning ? `<div class="warn-box"><strong>⚠️ 注意</strong>${r.warning}</div>` : '';
   const memo = r.memo ? `<div style="background:var(--bg);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--text-muted);margin-top:10px;">${r.memo}</div>` : '';
 
