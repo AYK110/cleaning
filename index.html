@@ -420,11 +420,21 @@
           </div>
         </div>
         <div>
-          <div class="filter-row">
-            <button class="filter-chip active" onclick="filterSupplies(this,'all')">すべて</button>
-            <button class="filter-chip" onclick="filterSupplies(this,'洗剤')">洗剤</button>
-            <button class="filter-chip" onclick="filterSupplies(this,'道具')">道具</button>
-            <button class="filter-chip" onclick="filterSupplies(this,'消耗品')">消耗品</button>
+          <div class="filter-row" id="supply-cat-filter">
+            <button class="filter-chip active" onclick="filterSuppliesCat(this,'all')">すべて</button>
+            <button class="filter-chip" onclick="filterSuppliesCat(this,'洗剤')">洗剤</button>
+            <button class="filter-chip" onclick="filterSuppliesCat(this,'道具')">道具</button>
+            <button class="filter-chip" onclick="filterSuppliesCat(this,'消耗品')">消耗品</button>
+          </div>
+          <div class="filter-row" id="supply-area-filter">
+            <button class="filter-chip active" onclick="filterSuppliesArea(this,'all')">場所：すべて</button>
+            <button class="filter-chip" onclick="filterSuppliesArea(this,'キッチン')">🍳 キッチン</button>
+            <button class="filter-chip" onclick="filterSuppliesArea(this,'お風呂')">🛁 お風呂</button>
+            <button class="filter-chip" onclick="filterSuppliesArea(this,'トイレ')">🚽 トイレ</button>
+            <button class="filter-chip" onclick="filterSuppliesArea(this,'洗面台')">🚰 洗面台</button>
+            <button class="filter-chip" onclick="filterSuppliesArea(this,'リビング')">🛋️ リビング</button>
+            <button class="filter-chip" onclick="filterSuppliesArea(this,'玄関')">👟 玄関</button>
+            <button class="filter-chip" onclick="filterSuppliesArea(this,'ウォークインクローゼット')">👗 クローゼット</button>
           </div>
           <div id="supplies-list"></div>
         </div>
@@ -633,7 +643,7 @@ const DEFAULT_SUPPLIES = [
   { id:'s15', name:'フローリングシート（ドライ）', category:'消耗品', icon:'🌬️', areas:['リビング','玄関','ウォークインクローゼット'], stock:'あり', note:'ホコリ取り。掃除機より静かで手軽' },
   { id:'s16', name:'フローリングシート（ウェット）', category:'消耗品', icon:'💦', areas:['リビング','玄関'], stock:'あり', note:'ドライの後に使うと効果的' },
   { id:'s17', name:'トイレシート（使い捨て）', category:'消耗品', icon:'🧻', areas:['トイレ'], stock:'あり', note:'便座・外側・床の日常清掃に。1枚で完結' },
-  { id:'s18', name:'ウタマロクリーナー', category:'洗剤', icon:'🟢', areas:['キッチン','お風呂','洗面台','玄関'], stock:'あり', note:'中性で素材を選ばず使える万能洗剤。泡立てて擦るだけ。シンク磨きにも最適' },
+  { id:'s18', name:'ウタマロクリーナー', category:'洗剤', icon:'🟢', areas:['キッチン','お風呂','洗面台','リビング','玄関'], stock:'あり', note:'中性で素材を選ばず使える万能洗剤。泡立てて擦るだけ。シンク磨きにも最適' },
   { id:'s19', name:'ジフ（クレンザー）', category:'洗剤', icon:'🫙', areas:['キッチン','洗面台'], stock:'なし', note:'研磨剤入りクレンザー。シンクや浴槽の頑固な水垢・汚れに。素材を確認してから使用' },
 ];
 
@@ -912,9 +922,11 @@ let state = loadState();
 
   // ── 道具・洗剤 ──
   const supplyIds = new Set(state.supplies.map(s => s.id));
-  // 新デフォルト洗剤を追加
+  // 新デフォルト洗剤を追加・areasを最新に同期
   DEFAULT_SUPPLIES.forEach(s => {
-    if (!supplyIds.has(s.id)) state.supplies.push({...s});
+    const existing = state.supplies.find(x => x.id === s.id);
+    if (!existing) state.supplies.push({...s});
+    else existing.areas = s.areas; // 場所タグを常に最新に
   });
   // 在庫の修正（既存データが古い値のままの場合のみ補正）
   const stockFixes = { s5:'なし', s7:'あり' }; // マイペット→なし、クエン酸→あり
@@ -927,6 +939,7 @@ let state = loadState();
 })();
 
 let suppliesFilter = 'all';
+let suppliesAreaFilter = 'all';
 let recipesFilter = 'all';
 let schedFilter = 'all';
 let editingSupplyId = null;
@@ -1402,16 +1415,25 @@ function initSupplyAreaChips() {
 function getSelectedAreas() { return Array.from(document.querySelectorAll('#s-areas-chips .chip.selected')).map(b => b.textContent); }
 function setSelectedAreas(areas) { document.querySelectorAll('#s-areas-chips .chip').forEach(b => b.classList.toggle('selected', areas.includes(b.textContent))); }
 
-function filterSupplies(btn, cat) {
+function filterSuppliesCat(btn, cat) {
   suppliesFilter = cat;
-  document.querySelectorAll('#page-supplies .filter-chip').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#supply-cat-filter .filter-chip').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderSupplies();
+}
+function filterSuppliesArea(btn, area) {
+  suppliesAreaFilter = area;
+  document.querySelectorAll('#supply-area-filter .filter-chip').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   renderSupplies();
 }
 
 function renderSupplies() {
   initSupplyAreaChips();
-  const items = suppliesFilter === 'all' ? state.supplies : state.supplies.filter(s => s.category === suppliesFilter);
+  const items = state.supplies.filter(s =>
+    (suppliesFilter === 'all' || s.category === suppliesFilter) &&
+    (suppliesAreaFilter === 'all' || (s.areas||[]).includes(suppliesAreaFilter))
+  );
   if (items.length === 0) { document.getElementById('supplies-list').innerHTML = `<div class="empty-state"><div class="icon">🧴</div>登録なし</div>`; return; }
   document.getElementById('supplies-list').innerHTML = items.map(s => {
     const isDefault = DEFAULT_SUPPLY_IDS.has(s.id);
