@@ -1619,7 +1619,7 @@ function showToast(msg) {
 // GAS SYNC
 // ══════════════════════════════════════════════
 function headerSyncTap() {
-  const url = localStorage.getItem('gasUrl') || '';
+  const url = localStorage.getItem('souji_gasUrl') || '';
   if (url.startsWith('https://script.google.com')) {
     syncPull(); // URL設定済み → 即Pull
   } else {
@@ -1628,7 +1628,7 @@ function headerSyncTap() {
 }
 
 function openSyncModal() {
-  const url = localStorage.getItem('gasUrl') || '';
+  const url = localStorage.getItem('souji_gasUrl') || '';
   document.getElementById('gas-url-input').value = url;
   updateSyncButtons(url);
   document.getElementById('sync-modal').classList.add('open');
@@ -1641,7 +1641,7 @@ function saveGasUrl() {
     document.getElementById('sync-url-status').className = 'sync-status err';
     return;
   }
-  localStorage.setItem('gasUrl', url);
+  localStorage.setItem('souji_gasUrl', url);
   document.getElementById('sync-url-status').textContent = '✓ URL を保存しました';
   document.getElementById('sync-url-status').className = 'sync-status ok';
   updateSyncButtons(url);
@@ -1655,17 +1655,17 @@ function updateSyncButtons(url) {
 }
 
 function updateSyncIndicator() {
-  const url = localStorage.getItem('gasUrl') || '';
+  const url = localStorage.getItem('souji_gasUrl') || '';
   const connected = url.startsWith('https://script.google.com');
   const dot = document.getElementById('sidebar-sync-dot');
   if (dot) dot.className = 'sync-dot' + (connected ? ' connected' : '');
   const timeEl = document.getElementById('sidebar-sync-time');
-  const lastSync = localStorage.getItem('lastSyncTime');
+  const lastSync = localStorage.getItem('souji_lastSyncTime');
   if (timeEl) timeEl.textContent = lastSync ? '最終同期: ' + lastSync : connected ? 'URL設定済み・未同期' : '未設定';
 }
 
 async function syncPush() {
-  const url = localStorage.getItem('gasUrl') || '';
+  const url = localStorage.getItem('souji_gasUrl') || '';
   if (!url) return;
   const statusEl = document.getElementById('sync-op-status');
   statusEl.textContent = '⬆️ 送信中...';
@@ -1679,7 +1679,7 @@ async function syncPush() {
     const json = await res.json();
     if (json.ok) {
       const t = new Date().toLocaleString('ja-JP', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
-      localStorage.setItem('lastSyncTime', t);
+      localStorage.setItem('souji_lastSyncTime', t);
       statusEl.textContent = `✓ ${t} にクラウドへ保存しました`;
       statusEl.className = 'sync-status ok';
       updateSyncIndicator();
@@ -1691,7 +1691,7 @@ async function syncPush() {
 }
 
 async function syncPull() {
-  const url = localStorage.getItem('gasUrl') || '';
+  const url = localStorage.getItem('souji_gasUrl') || '';
   if (!url) return;
   const statusEl = document.getElementById('sync-op-status');
   statusEl.textContent = '⬇️ 取得中...';
@@ -1717,7 +1717,7 @@ async function syncPull() {
     // 全ページ再描画
     renderHome();
     const t = new Date().toLocaleTimeString('ja-JP');
-    localStorage.setItem('lastSyncTime', t);
+    localStorage.setItem('souji_lastSyncTime', t);
     statusEl.textContent = `✓ ${t} にクラウドから取得しました`;
     statusEl.className = 'sync-status ok';
     updateSyncIndicator();
@@ -1741,7 +1741,7 @@ updateSyncIndicator();
 
 // 起動時に自動Pull（GAS URL設定済みの場合のみ・サイレント実行）
 (function autoPullOnStart() {
-  const url = localStorage.getItem('gasUrl') || '';
+  const url = localStorage.getItem('souji_gasUrl') || '';
   if (!url.startsWith('https://script.google.com')) return;
   fetch(url)
     .then(r => r.json())
@@ -1761,7 +1761,7 @@ updateSyncIndicator();
       saveState();
       renderHome();
       const t = new Date().toLocaleString('ja-JP', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
-      localStorage.setItem('lastSyncTime', t);
+      localStorage.setItem('souji_lastSyncTime', t);
       updateSyncIndicator();
     })
     .catch(() => {}); // オフライン時は黙って無視
