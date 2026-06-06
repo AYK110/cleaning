@@ -181,8 +181,8 @@
   .area-tip strong { display: block; margin-bottom: 3px; font-weight: 700; }
 
   /* Recipe */
-  .recipe-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 12px; cursor: pointer; transition: box-shadow .15s, transform .1s; }
-  @media (min-width: 768px) { .recipe-card { margin-bottom: 0; } }
+  .recipe-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-bottom: 20px; cursor: pointer; transition: box-shadow .15s, transform .1s; }
+  @media (min-width: 768px) { .recipe-card { margin-bottom: 20px; } }
   .recipe-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.09); transform: translateY(-1px); }
   .recipe-card-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
   .recipe-card-name { font-size: 16px; font-weight: 700; flex: 1; }
@@ -330,10 +330,7 @@
         <button class="filter-chip" onclick="filterSched(this,'regular')">定期掃除</button>
         <button class="filter-chip" onclick="filterSched(this,'deep')">大掃除</button>
       </div>
-      <div class="grid-2">
-        <div id="sched-left"></div>
-        <div id="sched-right"></div>
-      </div>
+      <div id="sched-container"></div>
     </div>
 
     <!-- 掃除レシピ -->
@@ -680,22 +677,41 @@ const DEFAULT_RECIPES = [
     memo:'月1〜2回続けるとぬめりが溜まりにくくなる。洗濯機の排水口にも同じ手順が使える。',
   },
   {
-    id:'r6', name:'キッチン全体クリーニング', ytUrl:'https://www.youtube.com/watch?v=bB9T2AmlkXo', area:'キッチン', time:90,
-    supplies:['キッチンマジックリン','スポンジ（キッチン）','使い捨て手袋'],
-    extraSupplies:['キッチン泡ハイター','ジフ（クレンザー）','メラミンスポンジ','ブラシ','タオル（拭き掃除用）複数枚','バケツ','ボウル'],
+    id:'r6a', name:'キッチン掃除（毎日）― コンロ拭き', ytUrl:'https://www.youtube.com/watch?v=bB9T2AmlkXo', area:'キッチン', time:5,
+    supplies:['キッチンマジックリン','スポンジ（キッチン）'],
+    extraSupplies:['キッチンペーパー'],
     steps:[
-      '【毎日 ― コンロ周りを拭く】',
       'タオルまたはキッチンペーパーにキッチンマジックリンを染み込ませる',
-      'コンロ・コンロ周りの壁を拭く（調理後の温かいうちが一番落ちやすい）',
-      '【週1 ― シンク・蛇口・排水溝を磨く】',
-      'スポンジで蛇口やシンクの中を擦る',
+      'コンロ天板・五徳周りを拭く',
+      'コンロ周りの壁を拭く',
+    ],
+    warning:'',
+    memo:'調理後の温かいうちが油汚れが一番落ちやすい。習慣化するなら「ご飯を食べている間にセット→食後すぐ拭く」の流れがおすすめ。',
+  },
+  {
+    id:'r6b', name:'キッチン掃除（週1）― シンク・排水溝', ytUrl:'https://www.youtube.com/watch?v=bB9T2AmlkXo', area:'キッチン', time:15,
+    supplies:['スポンジ（キッチン）','使い捨て手袋'],
+    extraSupplies:['キッチン泡ハイター','ジフ（クレンザー）','ブラシ'],
+    steps:[
+      '【シンク・蛇口を磨く】',
+      'スポンジで蛇口・シンク全体を擦る',
       '水で洗剤を流す',
-      '排水溝の蓋を水とブラシで表面の汚れを落とす',
-      'キッチン泡ハイターを2プッシュしてブラシで広げ、数分つけ置きする',
-      '【週1 ― シンクをジフで磨く】',
       'シンク全体を水で濡らしてからジフを垂らす（油汚れが酷い場合は先にキッチンマジックリンで表面の汚れを取ってから）',
       'スポンジで全体を擦り、水で流す',
-      '【月1 ― 換気扇周り・壁・引き出しの拭き掃除】',
+      '【排水溝の除菌】',
+      '排水溝の蓋を水とブラシで表面の汚れを落とす',
+      'キッチン泡ハイターを2プッシュしてブラシで広げ、数分つけ置きする',
+      '水で流す',
+    ],
+    warning:'泡ハイター（塩素系）とキッチンマジックリン（酸性成分含む製品）は直接混ぜない。使用後は水拭きしてから次の洗剤を使うこと。',
+    memo:'シンク磨きはジフで擦ると白くくすんでいたシンクがピカピカになって達成感大きめ。週1の中で一番「やった感」がある。',
+  },
+  {
+    id:'r6c', name:'キッチン掃除（月1）― 換気扇周り・壁・キッチン台', ytUrl:'https://www.youtube.com/watch?v=bB9T2AmlkXo', area:'キッチン', time:40,
+    supplies:['キッチンマジックリン','スポンジ（キッチン）','使い捨て手袋'],
+    extraSupplies:['キッチン泡ハイター','メラミンスポンジ','タオル（拭き掃除用）複数枚','ボウル'],
+    steps:[
+      '【換気扇周り・壁・コンロ周りの拭き掃除】',
       'ボウルに水を入れ、キッチンマジックリンを水3：洗剤1の割合で混ぜる',
       'タオルを洗剤液に染み込ませ、スポンジにも染み込ませる',
       'タオルで換気扇の周りを拭く',
@@ -703,23 +719,37 @@ const DEFAULT_RECIPES = [
       'タオルでコンロ周りを拭く',
       'スポンジでコンロ周りを擦る',
       'タオルで引き出し周りを拭く',
-      '【月1 ― キッチン台を泡ハイターで除菌】',
+      '【キッチン台を泡ハイターで除菌】',
       'メラミンスポンジに水を染み込ませ、キッチン台に絞って水をかける',
       'その上に泡ハイターをスプレーしてメラミンスポンジで広げる',
       '10分置く',
       'タオルで水拭きする',
-      '【月1 ― 仕上げ：全体を水拭き】',
+      '【仕上げ：全体を水拭き】',
       'タオルを水洗いして固く絞り、上から順に拭く（換気扇周り→壁→コンロ周り→引き出し周り）',
-      '【年1 ― 換気扇ファンの分解掃除（大掃除タイミングに）】',
-      'バケツに水を入れ、キッチンマジックリンを100ml程度入れる',
-      '換気扇のファンを取り外してバケツにつけ置きする（月1の拭き掃除をしながら待つと効率よい）',
-      'つけ置き後、ブラシで擦って汚れを落とす',
-      '水を拭き取り、十分に乾かしてから取り付ける',
     ],
     warning:'泡ハイター（塩素系）とキッチンマジックリン（酸性成分含む製品）は直接混ぜない。それぞれ使用後に水拭きしてから次の洗剤を使うこと。',
-    memo:'年1の換気扇ファン分解掃除は大掃除のタイミングで十分。月1の拭き掃除さえ続ければ、年1でもそこまで汚れが溜まらない。まずは毎日のコンロ拭きだけでも習慣にすると、キッチン全体がぐっと楽になる。',
+    memo:'月1でやっておくと年1の換気扇ファン分解掃除のときの汚れが格段に少なくて済む。洗濯のついでに始めると動きやすい。',
+  },
+  {
+    id:'r6d', name:'キッチン掃除（年1）― 換気扇ファン分解掃除', ytUrl:'https://www.youtube.com/watch?v=bB9T2AmlkXo', area:'キッチン', time:60,
+    supplies:['キッチンマジックリン','使い捨て手袋'],
+    extraSupplies:['バケツ','ブラシ','タオル'],
+    steps:[
+      '【最初につけ置き開始（時間がかかるため先にやる）】',
+      'バケツに水を入れ、キッチンマジックリンを100ml程度入れる',
+      '換気扇のファンを取り外してバケツにつけ置きする',
+      '月1の拭き掃除（r6c）をしながらつけ置き時間を待つと効率よい',
+      '【換気扇ファンの仕上げ】',
+      'つけ置き後、ブラシでファンの羽根を擦って汚れを落とす',
+      '水でよくすすぐ',
+      'タオルで水を拭き取り、十分に乾かしてから取り付ける（濡れたまま取り付けない）',
+    ],
+    warning:'換気扇ファンの取り外し方は機種によって異なる。無理に引っ張らず、取扱説明書を確認してから作業すること。',
+    memo:'大掃除（12月・6月）のタイミングに合わせてやると忘れにくい。月1の拭き掃除を続けていれば、年1でもそこまでひどい汚れにはならない。',
   },
 ];
+
+const DEFAULT_RECIPE_IDS = new Set(DEFAULT_RECIPES.map(r => r.id));
 
 const AREA_GUIDES = [
   { id:'toilet', name:'トイレ 🚽', freq:'便器内：週1 / 外側：毎日〜週2',
@@ -862,9 +892,14 @@ function saveState() { localStorage.setItem('soujikanri_v3', JSON.stringify(stat
 
 let state = loadState();
 
-// マイグレーション：デフォルトレシピに新しいものが追加された場合、既存ユーザーにも反映する
+// マイグレーション：デフォルトレシピに新しいものが追加／IDが変わった場合に既存ユーザーへ反映
 (function migrateDefaultRecipes() {
   const existingIds = new Set(state.recipes.map(r => r.id));
+  // r6（旧・キッチン全体クリーニング）をr6a〜r6dに置き換え
+  if (existingIds.has('r6') && !existingIds.has('r6a')) {
+    state.recipes = state.recipes.filter(r => r.id !== 'r6');
+    existingIds.delete('r6');
+  }
   DEFAULT_RECIPES.forEach(r => {
     if (!existingIds.has(r.id)) {
       state.recipes.push({...r});
@@ -1024,11 +1059,10 @@ function filterSched(btn, cat) {
 
 function renderSchedule() {
   const show = schedFilter;
-
-  let leftHtml = '', rightHtml = '';
+  let html = '';
 
   if (show === 'all' || show === 'weekday') {
-    leftHtml += `<div class="card" style="margin-bottom:14px;">
+    html += `<div class="card" style="margin-bottom:14px;">
       <div class="card-title">⚡ 平日の日課（サクッと終わる）</div>
       <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px;">仕事帰り・疲れていても5〜10分でできるもの。チェックして達成感を。</p>
       ${WEEKDAY_TASKS.map(t => schedItemHtml(t, state.todayChecks[t.id], 'today')).join('')}
@@ -1036,7 +1070,7 @@ function renderSchedule() {
   }
 
   if (show === 'all' || show === 'weekend') {
-    rightHtml += `<div class="card" style="margin-bottom:14px;">
+    html += `<div class="card" style="margin-bottom:14px;">
       <div class="card-title">🌿 週末の家事・掃除</div>
       <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px;">時間があるときに。全部やらなくていい、できたものからでOK。</p>
       ${WEEKEND_TASKS.map(t => schedItemHtml(t, state.todayChecks[t.id], 'today')).join('')}
@@ -1058,14 +1092,12 @@ function renderSchedule() {
         </div>
       </div>`;
     }).join('');
-    const block = `<div class="card" style="margin-bottom:14px;">
+    html += `<div class="card" style="margin-bottom:14px;">
       <div class="card-title">🏠 家事スケジュール（寝具・洗濯・洗濯機など）</div>
       <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px;">洗濯が好きなあなたに合った頻度で。シーツや布団乾燥機のタイミングの目安にどうぞ。</p>
       ${hwHtml}
       <div style="margin-top:12px;"><button class="btn btn-outline btn-sm" onclick="resetChecks('housework')">チェックをリセット</button></div>
     </div>`;
-    if (show === 'all') rightHtml += block;
-    else leftHtml += block;
   }
 
   if (show === 'all' || show === 'regular') {
@@ -1091,12 +1123,11 @@ function renderSchedule() {
         }).join('')}
       </div>`;
     });
-    const block = `<div class="card" style="margin-bottom:14px;">
+    html += `<div class="card" style="margin-bottom:14px;">
       <div class="card-title">📋 定期掃除スケジュール</div>
       ${regHtml}
       <div style="margin-top:12px;"><button class="btn btn-outline btn-sm" onclick="resetChecks('schedule')">チェックをリセット</button></div>
     </div>`;
-    leftHtml += block;
   }
 
   if (show === 'all' || show === 'deep') {
@@ -1113,17 +1144,15 @@ function renderSchedule() {
         </div>
       </div>`;
     }).join('');
-    const block = `<div class="card" style="margin-bottom:14px;">
+    html += `<div class="card" style="margin-bottom:14px;">
       <div class="card-title">🏔️ 大掃除チェックリスト（年2回目安）</div>
       <p style="font-size:12px;color:var(--text-muted);margin-bottom:10px;">全部やらなくていい。できたものだけでOK。</p>
       ${dcHtml}
       <div style="margin-top:12px;"><button class="btn btn-outline btn-sm" onclick="resetChecks('deep')">チェックをリセット</button></div>
     </div>`;
-    rightHtml += block;
   }
 
-  document.getElementById('sched-left').innerHTML = leftHtml || '<div style="color:var(--text-muted);font-size:13px;padding:20px;">フィルターを選んでください</div>';
-  document.getElementById('sched-right').innerHTML = rightHtml;
+  document.getElementById('sched-container').innerHTML = html;
 }
 
 function schedItemHtml(t, done, type) {
@@ -1215,7 +1244,7 @@ function renderRecipeList() {
       <div class="recipe-supply-chips">${chips}</div>
       <div class="recipe-card-actions" onclick="event.stopPropagation()">
         <button class="btn btn-outline btn-sm" onclick="editRecipe('${r.id}')">編集</button>
-        <button class="btn btn-danger btn-sm" onclick="deleteRecipe('${r.id}')">削除</button>
+        ${DEFAULT_RECIPE_IDS.has(r.id) ? '' : `<button class="btn btn-danger btn-sm" onclick="deleteRecipe('${r.id}')">削除</button>`}
       </div>
     </div>`;
   }).join('');
@@ -1525,7 +1554,7 @@ async function syncPush() {
     });
     const json = await res.json();
     if (json.ok) {
-      const t = new Date().toLocaleTimeString('ja-JP');
+      const t = new Date().toLocaleString('ja-JP', {year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
       localStorage.setItem('lastSyncTime', t);
       statusEl.textContent = `✓ ${t} にクラウドへ保存しました`;
       statusEl.className = 'sync-status ok';
