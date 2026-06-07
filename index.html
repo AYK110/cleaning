@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>掃除管理</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='6' fill='%237eb8a4'/><g fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M7 20V9a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v11H7z'/><rect x='8' y='5' width='4' height='4' rx='0.5'/><path d='M16 10h2a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-2'/><line x1='10' y1='5' x2='10' y2='3'/><line x1='13' y1='4' x2='15' y2='2'/><line x1='7' y1='4' x2='5' y2='2'/></g></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='6' fill='%237eb8a4'/><g fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><line x1='18' y1='3' x2='8' y2='17'/><path d='M8 17 L4 21 Q3 22 4 21.5 L10 19 Z'/><line x1='14' y1='8' x2='10' y2='19'/></g></svg>">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -240,7 +240,7 @@
 <body>
 
 <div class="app-header">
-  <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M7 20V9a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v11H7z"/><rect x="8" y="5" width="4" height="4" rx="0.5"/><path d="M16 10h2a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-2"/><line x1="10" y1="5" x2="10" y2="3"/><line x1="13" y1="4" x2="15" y2="2"/><line x1="7" y1="4" x2="5" y2="2"/></svg></div>
+  <div class="logo-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="3" x2="8" y2="17"/><path d="M8 17 L4 21 Q3 22 4 21.5 L10 19 Z"/><line x1="14" y1="8" x2="10" y2="19"/></svg></div>
   掃除管理
   <span class="date" id="header-date"></span>
   <button class="header-sync-btn" onclick="headerSyncTap()"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><polyline points="23 20 23 14 17 14"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>同期</button>
@@ -249,7 +249,7 @@
 <div class="desktop-layout">
   <aside class="sidebar">
     <div class="sidebar-logo">
-      <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M7 20V9a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v11H7z"/><rect x="8" y="5" width="4" height="4" rx="0.5"/><path d="M16 10h2a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-2"/><line x1="10" y1="5" x2="10" y2="3"/><line x1="13" y1="4" x2="15" y2="2"/><line x1="7" y1="4" x2="5" y2="2"/></svg></div>
+      <div class="logo-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="3" x2="8" y2="17"/><path d="M8 17 L4 21 Q3 22 4 21.5 L10 19 Z"/><line x1="14" y1="8" x2="10" y2="19"/></svg></div>
       <div class="logo-text">掃除管理<span class="logo-date" id="sidebar-date"></span></div>
     </div>
     <nav class="sidebar-nav">
@@ -611,9 +611,9 @@ const HOUSEWORK_DATA = [
   { id:'hw1', freq:'週1回（週末）', area:'寝室', task:'シーツ・枕カバーを洗う', tip:'土曜の朝に洗うと日中に乾く。洗濯好きには最高の家事', time:10 },
   { id:'hw2', freq:'週2〜3回', area:'全般', task:'タオル類を洗う', tip:'バスタオルは2〜3日、フェイスタオルは毎日〜2日が理想', time:5 },
   { id:'hw3', freq:'月2回（梅雨は週1）', area:'寝室', task:'布団乾燥機にかける', tip:'約60分。ダニ対策になる。梅雨・夏は頻度を増やす', time:60 },
-  { id:'hw4', freq:'月1〜2回', area:'寝室', task:'布団を干す（晴天の10〜14時）', tip:'布団乾燥機があれば雨でも代替OK', time:30 },
   { id:'hw5', freq:'月1回', area:'全般', task:'洗濯機を洗う（洗濯槽クリーナー）', tip:'カビ・臭いの原因になる。月1回の習慣に', time:60 },
-  { id:'hw6', freq:'週1回', area:'全般', task:'ゴミをまとめて収集日前日に出す', tip:'収集日に合わせて前日夜にまとめる習慣を', time:5 },
+  { id:'hw6a', freq:'日曜・水曜の夜', area:'全般', task:'燃えるゴミをまとめて玄関に出す', tip:'月・木が収集日。前日夜にゴミ袋を縛ってまとめておく', time:5 },
+  { id:'hw6b', freq:'月曜の夜（隔週〜月1）', area:'全般', task:'ビン・缶・ペットボトル・段ボール・発泡スチロールを分ける', tip:'火曜が収集日。ペットボトルはキャップとラベルを外す。段ボールは紐で縛る', time:10 },
   { id:'hw7', freq:'月1〜2回', area:'キッチン', task:'排水口のぬめり取り', tip:'重曹→クエン酸の順で流すとぬめりが取れる', time:10 },
   { id:'hw8', freq:'3ヶ月に1回', area:'全般', task:'カーテンを洗う', tip:'洗濯表示を確認。季節の変わり目がタイミング', time:20 },
   { id:'hw9', freq:'月2回', area:'寝室', task:'枕を干す・天日干しまたは乾燥機', tip:'汗・臭いがこもりやすい。清潔な睡眠のために', time:30 },
@@ -634,7 +634,8 @@ const REGULAR_SCHED = [
   { id:'sc11', freq:'2週間に1回', area:'お風呂',   task:'浴槽をバスマジックリンで洗う',  tip:'入浴後すぐが汚れ落ちやすい', time:10 },
   { id:'sc12', freq:'2週間に1回', area:'お風呂',   task:'シャワーヘッド・蛇口を拭く',   tip:'クエン酸→メラミンスポンジ', time:10 },
   { id:'sc13', freq:'2週間に1回', area:'リビング', task:'テーブル・棚をクロスで拭く',   tip:'ホコリが見えて取れると達成感がある', time:10 },
-  { id:'sc14', freq:'月1回',      area:'お風呂',   task:'排水口のヘアキャッチャー掃除', tip:'手袋して髪の毛を取る', time:10 },
+  { id:'sc14', freq:'週1回',      area:'お風呂',   task:'排水口のヘアキャッチャー掃除', tip:'手袋して髪の毛を取る。長い髪はすぐ詰まるので週1で◎', time:5 },
+  { id:'sc14b', freq:'月1回',     area:'トイレ',   task:'ウォシュレットのノズル掃除', tip:'ノズル洗浄ボタンを押して出したノズルをクエン酸スプレー→綿棒や柔らかいブラシで優しく拭く', time:10 },
   { id:'sc15', freq:'月1回',      area:'洗面台',   task:'鏡をクエン酸で磨く',           tip:'スプレーして乾いた布で拭く', time:10 },
   { id:'sc16', freq:'月1回',      area:'キッチン', task:'冷蔵庫内を拭く',               tip:'期限切れを捨てながら棚を拭く', time:15 },
   { id:'sc17', freq:'月1回',      area:'ウォークインクローゼット', task:'床のホコリをワイパーで取る', tip:'ドライシートで十分', time:5 },
@@ -651,7 +652,7 @@ const DEEP_CLEAN_DATA = [
   { id:'dc8',  area:'リビング', task:'窓ガラス・サッシの掃除', time:30 },
   { id:'dc9',  area:'リビング', task:'カーテンを洗濯', time:10 },
   { id:'dc10', area:'トイレ',   task:'便器の裏・床との設置面', time:15 },
-  { id:'dc11', area:'トイレ',   task:'タンク・ウォシュレットのノズル掃除', time:20 },
+  { id:'dc11', area:'トイレ',   task:'タンク内部の掃除', time:20 },
   { id:'dc12', area:'洗面台',  task:'鏡の徹底的な水垢取り', time:15 },
   { id:'dc13', area:'洗面台',  task:'排水口の詰まり掃除', time:15 },
   { id:'dc14', area:'玄関',    task:'下駄箱を空にして拭く・消臭', time:20 },
