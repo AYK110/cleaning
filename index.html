@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>掃除管理</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='6' fill='%237eb8a4'/><g fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><line x1='18' y1='3' x2='8' y2='17'/><path d='M8 17 L4 21 Q3 22 4 21.5 L10 19 Z'/><line x1='14' y1='8' x2='10' y2='19'/></g></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect width='24' height='24' rx='6' fill='%237eb8a4'/><g fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><line x1='21' y1='3' x2='13' y2='11'/><path d='M13 11 L5 8 L3 18 L12 20 Z'/><line x1='6' y1='13' x2='11' y2='14.5'/><line x1='5.5' y1='16' x2='11.5' y2='17.5'/><path d='M19 6 L19.67 7.33 L21 8 L19.67 8.67 L19 10 L18.33 8.67 L17 8 L18.33 7.33 Z'/><path d='M16 2.8 L16.4 3.6 L17.2 4 L16.4 4.4 L16 5.2 L15.6 4.4 L14.8 4 L15.6 3.6 Z'/><path d='M21.5 11 L21.83 11.67 L22.5 12 L21.83 12.33 L21.5 13 L21.17 12.33 L20.5 12 L21.17 11.67 Z'/></g></svg>">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
@@ -240,7 +240,7 @@
 <body>
 
 <div class="app-header">
-  <div class="logo-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="3" x2="8" y2="17"/><path d="M8 17 L4 21 Q3 22 4 21.5 L10 19 Z"/><line x1="14" y1="8" x2="10" y2="19"/></svg></div>
+  <div class="logo-icon"><svg viewBox="0 0 24 24"><line x1="21" y1="3" x2="13" y2="11"/><path d="M13 11 L5 8 L3 18 L12 20 Z"/><line x1="6" y1="13" x2="11" y2="14.5"/><line x1="5.5" y1="16" x2="11.5" y2="17.5"/><path d="M19 6 L19.67 7.33 L21 8 L19.67 8.67 L19 10 L18.33 8.67 L17 8 L18.33 7.33 Z"/><path d="M16 2.8 L16.4 3.6 L17.2 4 L16.4 4.4 L16 5.2 L15.6 4.4 L14.8 4 L15.6 3.6 Z"/><path d="M21.5 11 L21.83 11.67 L22.5 12 L21.83 12.33 L21.5 13 L21.17 12.33 L20.5 12 L21.17 11.67 Z"/></svg></div>
   掃除管理
   <span class="date" id="header-date"></span>
   <button class="header-sync-btn" onclick="headerSyncTap()"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><polyline points="23 20 23 14 17 14"/><path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 0 1 3.51 15"/></svg>同期</button>
@@ -249,7 +249,7 @@
 <div class="desktop-layout">
   <aside class="sidebar">
     <div class="sidebar-logo">
-      <div class="logo-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="3" x2="8" y2="17"/><path d="M8 17 L4 21 Q3 22 4 21.5 L10 19 Z"/><line x1="14" y1="8" x2="10" y2="19"/></svg></div>
+      <div class="logo-icon"><svg viewBox="0 0 24 24"><line x1="21" y1="3" x2="13" y2="11"/><path d="M13 11 L5 8 L3 18 L12 20 Z"/><line x1="6" y1="13" x2="11" y2="14.5"/><line x1="5.5" y1="16" x2="11.5" y2="17.5"/><path d="M19 6 L19.67 7.33 L21 8 L19.67 8.67 L19 10 L18.33 8.67 L17 8 L18.33 7.33 Z"/><path d="M16 2.8 L16.4 3.6 L17.2 4 L16.4 4.4 L16 5.2 L15.6 4.4 L14.8 4 L15.6 3.6 Z"/><path d="M21.5 11 L21.83 11.67 L22.5 12 L21.83 12.33 L21.5 13 L21.17 12.33 L20.5 12 L21.17 11.67 Z"/></svg></div>
       <div class="logo-text">掃除管理<span class="logo-date" id="sidebar-date"></span></div>
     </div>
     <nav class="sidebar-nav">
@@ -593,6 +593,7 @@ const WEEKDAY_TASKS = [
   { id:'wd2', area:'キッチン', task:'食器を洗う（or 水に浸す）', tip:'「浸す」だけでもOK。こびりつき防止になる', time:10 },
   { id:'wd3', area:'トイレ', task:'トイレシートで便座・外側を拭く', tip:'1枚取り出すだけ。毎日やると達成感が高い', time:2 },
   { id:'wd4', area:'リビング', task:'床の上の物を定位置に戻す', tip:'床に置いてあるものをどこかへ移すだけでOK', time:5 },
+  { id:'wd5', area:'お風呂', task:'浴槽をバスマジックリンで洗う', tip:'入浴後すぐが一番落ちやすい。バスタブクレンジングでもOK', time:10 },
 ];
 
 // 週末の家事・掃除（時間があるときにやること）
@@ -631,10 +632,11 @@ const REGULAR_SCHED = [
   { id:'sc8',  freq:'週1〜2回',   area:'キッチン', task:'シンクをスポンジで磨く',        tip:'食器洗いのついでに', time:5 },
   { id:'sc9',  freq:'週1回',      area:'トイレ',   task:'便器内をブラシで洗う',          tip:'マジックリンかけて3分→ブラシ', time:10 },
   { id:'sc10', freq:'週1回',      area:'玄関',     task:'玄関を掃き・拭く',              tip:'靴を出して5分で完結', time:5 },
-  { id:'sc11', freq:'2週間に1回', area:'お風呂',   task:'浴槽をバスマジックリンで洗う',  tip:'入浴後すぐが汚れ落ちやすい', time:10 },
+  { id:'sc11', freq:'毎日（入浴後）', area:'お風呂', task:'浴槽をバスマジックリンで洗う', tip:'入浴後すぐが汚れ落ちやすい', time:10 },
   { id:'sc12', freq:'2週間に1回', area:'お風呂',   task:'シャワーヘッド・蛇口を拭く',   tip:'クエン酸→メラミンスポンジ', time:10 },
   { id:'sc13', freq:'2週間に1回', area:'リビング', task:'テーブル・棚をクロスで拭く',   tip:'ホコリが見えて取れると達成感がある', time:10 },
   { id:'sc14', freq:'週1回',      area:'お風呂',   task:'排水口のヘアキャッチャー掃除', tip:'手袋して髪の毛を取る。長い髪はすぐ詰まるので週1で◎', time:5 },
+  { id:'sc11b', freq:'月1回',     area:'キッチン', task:'電子レンジ内を拭く', tip:'水を入れたマグカップを2分レンジにかけ、蒸気で汚れを浮かせてから拭く。重曹水でも◎', time:10 },
   { id:'sc14b', freq:'月1回',     area:'トイレ',   task:'ウォシュレットのノズル掃除', tip:'ノズル洗浄ボタンを押して出したノズルをクエン酸スプレー→綿棒や柔らかいブラシで優しく拭く', time:10 },
   { id:'sc15', freq:'月1回',      area:'洗面台',   task:'鏡をクエン酸で磨く',           tip:'スプレーして乾いた布で拭く', time:10 },
   { id:'sc16', freq:'月1回',      area:'キッチン', task:'冷蔵庫内を拭く',               tip:'期限切れを捨てながら棚を拭く', time:15 },
@@ -1085,11 +1087,21 @@ function renderHome() {
   const badgeClass = weekend ? 'weekend' : 'weekday';
   const badgeLabel = weekend ? '🌿 今日は週末 — じっくりやろう' : '⚡ 今日は平日 — サクッと5分だけ';
 
+  // 曜日固有タスク（ゴミ出し）
+  const DAY_TASKS = {
+    0: [{ id:'dt_sun', area:'全般', task:'明日（月曜）は燃えるゴミ収集日！ゴミ袋をまとめておく', tip:'月曜の朝に出せるよう前日夜に準備。袋を縛って玄関へ', time:5 }],
+    1: [{ id:'dt_mon', area:'全般', task:'今夜はビン・缶・ペットボトル・段ボールを分別する', tip:'明日（火曜）が収集日。ペットボトルはキャップ・ラベルを外す。段ボールは紐で縛る', time:10 }],
+    3: [{ id:'dt_wed', area:'全般', task:'明日（木曜）は燃えるゴミ収集日！ゴミ袋をまとめておく', tip:'木曜の朝に出せるよう前日夜に準備。袋を縛って玄関へ', time:5 }],
+  };
+  const dayExtra = DAY_TASKS[now.getDay()] || [];
+  const allTasks = [...tasks, ...dayExtra];
+
   let done = 0;
-  const taskHtml = tasks.map(t => {
+  const taskHtml = allTasks.map(t => {
     const isDone = !!state.todayChecks[t.id];
     if (isDone) done++;
-    return `<div class="task-item" onclick="toggleToday('${t.id}')">
+    const isExtra = dayExtra.includes(t);
+    return `<div class="task-item" onclick="toggleToday('${t.id}')" ${isExtra ? 'style="background:var(--secondary-light);border-radius:8px;margin-top:6px;"' : ''}>
       <div class="task-check ${isDone?'done':''}"></div>
       <div style="flex:1;">
         <div class="task-name ${isDone?'done':''}">${t.task}</div>
@@ -1100,12 +1112,12 @@ function renderHome() {
 
   document.getElementById('today-day-badge').innerHTML = `<div class="day-badge ${badgeClass}">${badgeLabel}</div>`;
   document.getElementById('today-tasks').innerHTML = taskHtml;
-  const pct = Math.round(done / tasks.length * 100);
+  const pct = Math.round(done / allTasks.length * 100);
   document.getElementById('today-prog').style.width = pct + '%';
-  document.getElementById('today-prog-label').textContent = `${done}/${tasks.length} 完了（${pct}%）`;
+  document.getElementById('today-prog-label').textContent = `${done}/${allTasks.length} 完了（${pct}%）`;
 
-  // Housework reminders (always visible)
-  const hwHtml = HOUSEWORK_DATA.slice(0,4).map(h =>
+  // Housework reminders (3 items only)
+  const hwHtml = HOUSEWORK_DATA.slice(0,3).map(h =>
     `<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px dotted var(--border);">
       <span style="font-size:12px;font-weight:700;color:var(--text-muted);min-width:90px;">${h.freq}</span>
       <span style="flex:1;font-size:13px;">${h.task}</span>
